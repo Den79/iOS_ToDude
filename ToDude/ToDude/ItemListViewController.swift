@@ -10,7 +10,9 @@ import UIKit
 import CoreData
 
 class ItemListViewController: UITableViewController {
+  
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+  
   var items = [Item]()
   
   @IBAction func addItemButtonTapped(_ sender: UIBarButtonItem) {
@@ -49,28 +51,11 @@ class ItemListViewController: UITableViewController {
     // show our alert on screen
     present(alertController, animated: true, completion: nil)
   }
-
-  func saveItems() {
-    // wrap our try statement below in a do/catch block so we can handle any errors
-    do {
-      // save our context
-      try context.save()
-    } catch {
-      print("Error saving context \(error)")
-    }
-    
-    // reload our table to reflect any changes
-    tableView.reloadData()
-  }
   
   override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        loadItems()
     }
 
     // MARK: - Table view data source
@@ -97,6 +82,29 @@ class ItemListViewController: UITableViewController {
     let item = items[indexPath.row]
     item.completed = !item.completed
   }
-
+  
+  func saveItems() {
+    // wrap our try statement below in a do/catch block so we can handle any errors
+    do {
+      // save our context
+      try context.save()
+    } catch {
+      print("Error saving context \(error)")
+    }
+    
+    // reload our table to reflect any changes
+    tableView.reloadData()
+  }
+  
+  func loadItems(){
+    let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+    do {
+      items = try context.fetch(fetchRequest)
+    } catch {
+      print("Error fetching Items \(error)")
+    }
+    tableView.reloadData()
+    
+  }
 
 }

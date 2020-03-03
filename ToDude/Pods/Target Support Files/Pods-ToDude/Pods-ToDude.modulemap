@@ -1,0 +1,6 @@
+framework module Pods_ToDude {
+  umbrella header "Pods-ToDude-umbrella.h"
+
+  export *
+  module * { export * }
+}

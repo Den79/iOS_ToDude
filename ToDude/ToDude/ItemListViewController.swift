@@ -96,15 +96,20 @@ class ItemListViewController: UITableViewController {
     tableView.reloadData()
   }
   
-  func loadItems(){
+  func loadItems() {
+    // create a new fetch request of type NSFetchRequest<Item> - you must provide a type
     let fetchRequest: NSFetchRequest<Item> = Item.fetchRequest()
+    
+    // wrap our try statement below in a do/catch block so we can handle any errors
     do {
+      // fetch our items using our fetch request, save them in our items array
       items = try context.fetch(fetchRequest)
     } catch {
-      print("Error fetching Items \(error)")
+      print("Error fetching items: \(error)")
     }
-    tableView.reloadData()
     
+    // reload our table to reflect any changes
+    tableView.reloadData()
   }
 
 }

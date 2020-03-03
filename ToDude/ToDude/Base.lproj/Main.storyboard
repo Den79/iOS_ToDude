@@ -6,7 +6,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item List View Controller-->
+        <!--ToDude-->
         <scene sceneID="bfU-Dw-oPg">
             <objects>
                 <tableViewController id="JVi-Of-VlF" customClass="ItemListViewController" customModule="ToDude" customModuleProvider="target" sceneMemberID="viewController">
@@ -29,7 +29,13 @@
                             <outlet property="delegate" destination="JVi-Of-VlF" id="Qqv-sX-0XU"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="iLK-zE-6Kj"/>
+                    <navigationItem key="navigationItem" title="ToDude" id="iLK-zE-6Kj">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QVU-cM-TVN">
+                            <connections>
+                                <action selector="addItemButtonTapped:" destination="JVi-Of-VlF" id="TLt-ZL-nW8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmS-Hs-7H3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

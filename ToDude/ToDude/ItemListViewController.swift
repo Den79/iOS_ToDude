@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import SwipeCellKit
 
-class ItemListViewController: UITableViewController, SwipeTableViewCellDelegate {
+class ItemListViewController: UITableViewController {
   
   let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
   
@@ -86,28 +86,7 @@ class ItemListViewController: UITableViewController, SwipeTableViewCellDelegate 
     saveItems()
   }
   
-  //protocol
-  func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-    guard orientation == .right else { return nil }
-    
-    // initialize a SwipeAction object
-    let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
-      // delete the item from our context
-      self.context.delete(self.items[indexPath.row])
-      // remove the item from the items array
-      self.items.remove(at: indexPath.row)
-      
-      // save our context
-      self.saveItems()
-    }
-    
-    // customize the action appearance
-    deleteAction.image = UIImage(named: "trash")
-    
-    return [deleteAction]
-  }
-  
-  
+  // MARK: - Context access methods
   func saveItems() {
     // wrap our try statement below in a do/catch block so we can handle any errors
     do {
@@ -137,4 +116,28 @@ class ItemListViewController: UITableViewController, SwipeTableViewCellDelegate 
     tableView.reloadData()
   }
 
+}
+
+// separated logic
+extension ItemListViewController: SwipeTableViewCellDelegate {
+  //protocol
+  func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+    guard orientation == .right else { return nil }
+    
+    // initialize a SwipeAction object
+    let deleteAction = SwipeAction(style: .destructive, title: "Delete") { _, indexPath in
+      // delete the item from our context
+      self.context.delete(self.items[indexPath.row])
+      // remove the item from the items array
+      self.items.remove(at: indexPath.row)
+      
+      // save our context
+      self.saveItems()
+    }
+    
+    // customize the action appearance
+    deleteAction.image = UIImage(named: "trash")
+    
+    return [deleteAction]
+  }
 }
